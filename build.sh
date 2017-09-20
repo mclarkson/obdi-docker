@@ -2,7 +2,7 @@
 rm -rf buildfiles/
 rm -rf obdi-worker/buildfiles/
 
-# Build the nagrestconf debs
+# Build the obdi rpms
 docker build build-obdi/ -t obdi-build
 
 # Spin up the build container

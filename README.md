@@ -9,7 +9,7 @@ Two containers are created here, mclarkson/obdi-master and mclarkson/obdi-worker
 Start the obdi-master container:
 
 ```
-docker run -d -p 4443:443 --name obdi mclarkson/obdi-master
+docker run -d -p 4443:443 --name obdi-master mclarkson/obdi-master
 ```
 
 With the above setup:
