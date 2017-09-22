@@ -18,6 +18,12 @@ With the above setup:
   http://localhost:4443/manager/run<br>
   The default admin password is, admin.
 
+To start an obdi-worker container:
+
+```
+docker run -d --name obdi-worker-1 mclarkson/obdi-worker
+```
+
 ## Build
 
 To build, recompiling obdi from github mclarkson/obdi and remaking
