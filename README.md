@@ -43,15 +43,22 @@ Do the above installation steps then use the `examples/setupobdi.sh' script
 to set up Obdi with the Helloworld example plugins, and systemjobs plugins.
 
 ```
+docker run -d -p 4443:443 --name obdi-master mclarkson/obdi-master
+
 masterip=$(docker inspect obdi-master | \
   sed -n '/"Networks":/,/}/{s/.*IPAddress[^0-9]*\([0-9.]*\).*/\1/p}' )
+
+wget https://raw.githubusercontent.com/mclarkson/obdi-docker/master/examples/setupobdi.sh
+wget https://raw.githubusercontent.com/mclarkson/obdi-docker/master/examples/setupdefworker.sh
+
+bash setupobdi.sh $masterip
+
+docker run -d --name obdi-worker-1 --env-file mclarkson/obdi-worker
 
 workerip=$(docker inspect obdi-worker-1 | \
   sed -n '/"Networks":/,/}/{s/.*IPAddress[^0-9]*\([0-9.]*\).*/\1/p}')
 
-wget https://raw.githubusercontent.com/mclarkson/obdi-docker/master/examples/setupobdi.sh
-
-bash setupobdi.sh $masterip $workerip
+bash setupdefworker.sh $workerip
 ```
 
 With the above setup:
@@ -70,3 +77,8 @@ obdi-master and obdi-worker images, use:
 bash build.sh
 ```
 
+Or, to rebuild completely from scratch (ignoring docker caches):
+
+```
+bash build.sh --no-cache
+```

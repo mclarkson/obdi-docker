@@ -26,7 +26,8 @@
 #
 
 usage() {
-    echo "$0 obdi-master-IP obdi-worker-IP"
+    #echo "$0 obdi-master-IP obdi-worker-IP"
+    echo "$0 obdi-master-IP"
 }
 [[ -z $1 ]] && {
     echo "Supply IP Address of obdi api server"
@@ -37,14 +38,14 @@ usage() {
     usage
     exit 0
 }
-[[ -z $2 ]] && {
-    echo "Supply IP Address of obdi worker"
-    usage
-    exit 1
-}
+#[[ -z $2 ]] && {
+#    echo "Supply IP Address of obdi worker"
+#    usage
+#    exit 1
+#}
 
 obdiMasterIp=$1
-obdiWorkerIp=$2
+#obdiWorkerIp=$2
 
 getrandpass() {
     # output a 20 character password
@@ -74,20 +75,22 @@ curl $opts -d '{
     "multi_login":true,
     "enabled":true}' "$proto://$ipport/api/admin/$guid/users"
 
+worker1pass=$(getrandpass)
+
 curl $opts -d '{
-    "login":"worker",
-    "passHash":"pAsSwOrD",
+    "login":"worker1",
+    "passHash":"'"$worker1pass"'",
     "forename":"Worker",
     "surname":"Daemon",
-    "email":"worker@invalid",
+    "email":"worker1@invalid",
     "multi_login":true,
     "enabled":true}' "$proto://$ipport/api/admin/$guid/users"
 
-pass=$(getrandpass)
+sduserpass=$(getrandpass)
 
 curl $opts -d '{
     "login":"sduser",
-    "passHash":"'"$pass"'",
+    "passHash":"'"$sduserpass"'",
     "forename":"Secret",
     "surname":"Data",
     "email":"sd@invalid",
@@ -103,47 +106,17 @@ curl $opts -d '{
 
 # Create Environment
 
-dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=main" | grep Id | grep -o "[0-9]"`
-
-curl $opts -d '{
-    "SysName":"testenv",
-    "DispName":"Test Environment",
-    "DcId":'"$dcid"',
-    "WorkerUrl":"https://'"$obdiWorkerIp"':4443/",
-    "WorkerKey":"lOcAlH0St"
-}' "$proto://$ipport/api/admin/$guid/envs"
-
-# ---------------------------------------------------------------------------
-add_perm()
-# ---------------------------------------------------------------------------
-# $1 - login (text)
-# $2 - data centre (text)
-# $3 - environment (text)
-# $4 - Enabled (true|false)
-# $5 - Writeable (true|false)
-{
-    userid=`curl $opts "$proto://$ipport/api/admin/$guid/users?login=$1" | grep Id | grep -o "[0-9]"`
-    dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=$2" | grep Id | grep -o "[0-9]"`
-    envid=`curl $opts "$proto://$ipport/api/admin/$guid/envs?sys_name=$3&dc_id=$dcid" | grep -w Id | grep -o "[0-9]"`
-
-    echo
-    echo "$1 $2 $3 $4 $5"
-    echo curl $opts -d '{
-        "UserId":'"$userid"',
-        "EnvId":'"$envid"',
-        "Enabled":true,
-        "Writeable":true
-    }' "$proto://$ipport/api/admin/$guid/perms"
-
-    curl $opts -d '{
-        "UserId":'"$userid"',
-        "EnvId":'"$envid"',
-        "Enabled":'"$4"',
-        "Writeable":'"$5"'
-    }' "$proto://$ipport/api/admin/$guid/perms"
-}
-
-add_perm nomen.nescio main testenv true true
+# This block moved to setupdefworker.sh
+#
+# dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=main" | grep Id | grep -o "[0-9]"`
+#
+# curl $opts -d '{
+#     "SysName":"testenv",
+#     "DispName":"Test Environment",
+#     "DcId":'"$dcid"',
+#     "WorkerUrl":"https://'"$obdiWorkerIp"':4443/",
+#     "WorkerKey":"lOcAlH0St"
+# }' "$proto://$ipport/api/admin/$guid/envs"
 
 # Add the plugin repositories
 
@@ -179,3 +152,13 @@ curl $opts -d '{
     "Name":"systemjobs"
 }' "$proto://$ipport/api/admin/$guid/repoplugins"
 
+echo
+
+worker1localkey=$(getrandpass)
+
+cat >envfile <<EnD
+OBDICONF_KEY="$worker1localkey"
+OBDICONF_MAN_URLPREFIX="https://${obdiMasterIp}
+OBDICONF_MAN_USER=worker1
+OBDICONF_MAN_PASSWORD="$worker1pass"
+EnD

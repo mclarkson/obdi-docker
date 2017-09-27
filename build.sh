@@ -1,9 +1,11 @@
 # clean
+opt=$1
+
 rm -rf buildfiles/
 rm -rf obdi-worker/buildfiles/
 
 # Build the obdi rpms
-docker build build-obdi/ -t obdi-build
+docker build $opt build-obdi/ -t obdi-build
 
 # Spin up the build container
 docker run --name buildfiles -d obdi-build
@@ -20,7 +22,7 @@ cp -a buildfiles/ obdi-worker/
 
 # Now we can...
 # Build obdi worker container
-docker build -t mclarkson/obdi-worker obdi-worker
+docker build $opt -t mclarkson/obdi-worker obdi-worker
 
 # Build obdi master container
-docker build -t mclarkson/obdi-master .
+docker build $opt -t mclarkson/obdi-master .
