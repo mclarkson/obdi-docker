@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-    echo "$0 obdi-worker-IP"
+    echo "$0 obdi-master-IP obdi-worker-IP"
 }
 [[ -z $1 ]] && {
     echo "Supply IP Address of obdi worker"
@@ -9,12 +9,14 @@ usage() {
     exit 1
 }
 
+obdiMasterIp=$1
 obdiWorkerIp=$2
 
 [[ ! -e envfile ]] && {
     echo "Run setupobdi.sh first (it writes the file, envfile)"
     exit 1
 }
+source envfile
 [[ -z $OBDICONF_KEY ]] && {
     echo "OBDICONF_KEY was not set in envfile. Re-run setupobdi.sh"
     exit 1
@@ -24,7 +26,7 @@ source envfile
 
 proto="https"
 opts="-k -s" # don't check ssl cert, silent
-ipport="$1:443"
+ipport="$obdiMasterIp:443"
 guid=`curl $opts -d '{"Login":"admin","Password":"admin"}' \
     $proto://$ipport/api/login | grep -o "[a-z0-9][^\"]*"`
 

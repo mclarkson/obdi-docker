@@ -72,7 +72,7 @@ curl $opts -d '{
     "forename":"Nomen",
     "surname":"Nescio",
     "email":"nn@invalid",
-    "multi_login":true,
+    "multilogin":true,
     "enabled":true}' "$proto://$ipport/api/admin/$guid/users"
 
 worker1pass=$(getrandpass)
@@ -83,7 +83,7 @@ curl $opts -d '{
     "forename":"Worker",
     "surname":"Daemon",
     "email":"worker1@invalid",
-    "multi_login":true,
+    "multilogin":true,
     "enabled":true}' "$proto://$ipport/api/admin/$guid/users"
 
 sduserpass=$(getrandpass)
@@ -94,7 +94,7 @@ curl $opts -d '{
     "forename":"Secret",
     "surname":"Data",
     "email":"sd@invalid",
-    "multi_login":true,
+    "multilogin":true,
     "enabled":true}' "$proto://$ipport/api/admin/$guid/users"
 
 # Create Data Centres
@@ -157,8 +157,8 @@ echo
 worker1localkey=$(getrandpass)
 
 cat >envfile <<EnD
-OBDICONF_KEY="$worker1localkey"
-OBDICONF_MAN_URLPREFIX="https://${obdiMasterIp}
+OBDICONF_KEY=$worker1localkey
+OBDICONF_MAN_URLPREFIX=https://${obdiMasterIp}
 OBDICONF_MAN_USER=worker1
-OBDICONF_MAN_PASSWORD="$worker1pass"
+OBDICONF_MAN_PASSWORD=$worker1pass
 EnD

@@ -58,7 +58,7 @@ docker run -d --name obdi-worker-1 --env-file envfile mclarkson/obdi-worker
 workerip=$(docker inspect obdi-worker-1 | \
   sed -n '/"Networks":/,/}/{s/.*IPAddress[^0-9]*\([0-9.]*\).*/\1/p}')
 
-bash setupdefworker.sh $workerip
+bash setupdefworker.sh $masterip $workerip
 ```
 
 With the above setup:
