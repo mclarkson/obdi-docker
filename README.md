@@ -53,7 +53,7 @@ wget https://raw.githubusercontent.com/mclarkson/obdi-docker/master/examples/set
 
 bash setupobdi.sh $masterip
 
-docker run -d --name obdi-worker-1 --env-file mclarkson/obdi-worker
+docker run -d --name obdi-worker-1 --env-file envfile mclarkson/obdi-worker
 
 workerip=$(docker inspect obdi-worker-1 | \
   sed -n '/"Networks":/,/}/{s/.*IPAddress[^0-9]*\([0-9.]*\).*/\1/p}')
