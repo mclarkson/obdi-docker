@@ -3,7 +3,16 @@
 usage() {
     echo "$0 obdi-master-IP obdi-worker-IP"
 }
+[[ $1 == "-h" ]] && {
+    usage
+    exit 0
+}
 [[ -z $1 ]] && {
+    echo "Supply IP Address of obdi master"
+    usage
+    exit 1
+}
+[[ -z $2 ]] && {
     echo "Supply IP Address of obdi worker"
     usage
     exit 1
@@ -23,24 +32,6 @@ source envfile
 }
 
 source envfile
-
-proto="https"
-opts="-k -s" # don't check ssl cert, silent
-ipport="$obdiMasterIp:443"
-guid=`curl $opts -d '{"Login":"admin","Password":"admin"}' \
-    $proto://$ipport/api/login | grep -o "[a-z0-9][^\"]*"`
-
-echo "GUID=$guid"
-
-dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=main" | grep Id | grep -o "[0-9]"`
-
-curl $opts -d '{
-    "SysName":"testenv",
-    "DispName":"Test Environment",
-    "DcId":'"$dcid"',
-    "WorkerUrl":"https://'"$obdiWorkerIp"':4443/",
-    "WorkerKey":"'"$OBDICONF_KEY"'"
-}' "$proto://$ipport/api/admin/$guid/envs"
 
 # ---------------------------------------------------------------------------
 add_perm()
@@ -71,5 +62,23 @@ add_perm()
         "Writeable":'"$5"'
     }' "$proto://$ipport/api/admin/$guid/perms"
 }
+
+proto="https"
+opts="-k -s" # don't check ssl cert, silent
+ipport="$obdiMasterIp:443"
+guid=`curl $opts -d '{"Login":"admin","Password":"admin"}' \
+    $proto://$ipport/api/login | grep -o "[a-z0-9][^\"]*"`
+
+echo "GUID=$guid"
+
+dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=main" | grep Id | grep -o "[0-9]"`
+
+curl $opts -d '{
+    "SysName":"testenv",
+    "DispName":"Test Environment",
+    "DcId":'"$dcid"',
+    "WorkerUrl":"https://'"$obdiWorkerIp"':4443/",
+    "WorkerKey":"'"$OBDICONF_KEY"'"
+}' "$proto://$ipport/api/admin/$guid/envs"
 
 add_perm nomen.nescio main testenv true true

@@ -26,7 +26,6 @@
 #
 
 usage() {
-    #echo "$0 obdi-master-IP obdi-worker-IP"
     echo "$0 obdi-master-IP"
 }
 [[ -z $1 ]] && {
@@ -38,14 +37,8 @@ usage() {
     usage
     exit 0
 }
-#[[ -z $2 ]] && {
-#    echo "Supply IP Address of obdi worker"
-#    usage
-#    exit 1
-#}
 
 obdiMasterIp=$1
-#obdiWorkerIp=$2
 
 getrandpass() {
     # output a 20 character password
@@ -59,7 +52,7 @@ getrandpass() {
 
 proto="https"
 opts="-k -s" # don't check ssl cert, silent
-ipport="$1:443"
+ipport="$obdiMasterIp:443"
 guid=`curl $opts -d '{"Login":"admin","Password":"admin"}' \
     $proto://$ipport/api/login | grep -o "[a-z0-9][^\"]*"`
 
