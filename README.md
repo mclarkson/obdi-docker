@@ -47,8 +47,7 @@ helloworld-runscript, and systemjobs.
 
 **How to do it**
 
-Do the above installation steps then use the `examples/setupobdi.sh' script
-to set up Obdi with the Helloworld example plugins, and systemjobs plugins.
+Run the following commands:
 
 ```
 docker run -d -p 4443:443 --name obdi-master mclarkson/obdi-master
