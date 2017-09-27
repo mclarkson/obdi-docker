@@ -12,12 +12,6 @@ Start the obdi-master container:
 docker run -d -p 4443:443 --name obdi-master mclarkson/obdi-master
 ```
 
-With the above setup:
-
-* Obdi is at https://localhost:4443/manager/admin and<br>
-  https://localhost:4443/manager/run<br>
-  The default admin password is, admin.
-
 To start an obdi-worker container:
 
 ```
