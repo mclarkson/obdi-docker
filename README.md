@@ -49,7 +49,9 @@ masterip=$(docker inspect obdi-master | \
 workerip=$(docker inspect obdi-worker-1 | \
   sed -n '/"Networks":/,/}/{s/.*IPAddress[^0-9]*\([0-9.]*\).*/\1/p}')
 
-bash examples/setupobdi.sh $masterip $workerip
+wget https://raw.githubusercontent.com/mclarkson/obdi-docker/master/examples/setupobdi.sh
+
+bash setupobdi.sh $masterip $workerip
 ```
 
 With the above setup:
