@@ -104,20 +104,6 @@ curl $opts -d '{
     "DispName":"Main"
     }' "$proto://$ipport/api/admin/$guid/dcs"
 
-# Create Environment
-
-# This block moved to setupdefworker.sh
-#
-# dcid=`curl $opts "$proto://$ipport/api/admin/$guid/dcs?sys_name=main" | grep Id | grep -o "[0-9]"`
-#
-# curl $opts -d '{
-#     "SysName":"testenv",
-#     "DispName":"Test Environment",
-#     "DcId":'"$dcid"',
-#     "WorkerUrl":"https://'"$obdiWorkerIp"':4443/",
-#     "WorkerKey":"lOcAlH0St"
-# }' "$proto://$ipport/api/admin/$guid/envs"
-
 # Add the plugin repositories
 
 # Core - for System Jobs
@@ -153,6 +139,8 @@ curl $opts -d '{
 }' "$proto://$ipport/api/admin/$guid/repoplugins"
 
 echo
+
+# Write the envfile used by examples/setupdefworker.sh script
 
 worker1localkey=$(getrandpass)
 
