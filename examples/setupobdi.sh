@@ -80,7 +80,7 @@ worker1pass=$(getrandpass)
 curl $opts -d '{
     "login":"worker1",
     "passHash":"'"$worker1pass"'",
-    "forename":"Worker",
+    "forename":"Testenv Default Worker",
     "surname":"Daemon",
     "email":"worker1@invalid",
     "multilogin":true,
