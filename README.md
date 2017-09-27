@@ -29,7 +29,7 @@ docker run -d --name obdi-worker-1 mclarkson/obdi-worker
 In this section instructions are provided to set up a fully working Obdi
 installation with 5 plugins.
 
-**The setup will consist of:**
+**The setup**
 
 Users: admin, nomen.nescio, sduser, and worker.
 
