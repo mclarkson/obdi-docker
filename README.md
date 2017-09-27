@@ -29,6 +29,11 @@ docker run -d --name obdi-worker-1 mclarkson/obdi-worker
 In this section instructions are provided to set up a fully working Obdi
 installation with 5 plugins.
 
+**Requirements**
+
+Docker and a Unix-like system such as: Linux, Mac, or Windows with
+Git-for-Windows.
+
 **The setup**
 
 Users: admin, nomen.nescio, sduser, and worker.
