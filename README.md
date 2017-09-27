@@ -28,7 +28,7 @@ docker run -d --name obdi-worker-1 mclarkson/obdi-worker
 
 **The setup will consist of:**
 
-Users: admin, nomen.nescio (password: nomen), sduser, and worker.
+Users: admin, nomen.nescio, sduser, and worker.
 
 Data Centres: main
 
