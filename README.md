@@ -14,8 +14,8 @@ docker run -d -p 4443:443 --name obdi-master mclarkson/obdi-master
 
 With the above setup:
 
-* Obdi is at http://localhost:4443/manager/admin and<br>
-  http://localhost:4443/manager/run<br>
+* Obdi is at https://localhost:4443/manager/admin and<br>
+  https://localhost:4443/manager/run<br>
   The default admin password is, admin.
 
 To start an obdi-worker container:
@@ -56,9 +56,9 @@ bash setupobdi.sh $masterip $workerip
 
 With the above setup:
 
-* Obdi admin interface is at http://localhost:4443/manager/admin and<br>
+* Obdi admin interface is at https://localhost:4443/manager/admin and<br>
   The default admin password is, admin.<br>
-* Obdi run interface is at http://localhost:4443/manager/run<br>
+* Obdi run interface is at https://localhost:4443/manager/run<br>
   The nomen.nescio password is, nomen.
 
 ## Build
