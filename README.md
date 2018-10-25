@@ -69,6 +69,28 @@ With the above setup:
 * Obdi run interface is at https://localhost:4443/manager/run<br>
   The nomen.nescio password is, nomen.
 
+## Environment Variables
+
+The following environment variables are available:
+
+For Master file /etc/obdi/obdi.conf:
+
+| Environment Variable  | default |
+| ------------- | ------------- |
+| `OBDICONF_DATABASE_PATH`        | `/var/lib/obdi/manager.db` |
+| `OBDICONF_PLUGIN_DATABASE_PATH` | `/var/lib/obdi/plugins/` |
+| `OBDICONF_GO_PLUGIN_DIR`        | `/usr/lib/obdi/plugins` |
+| ~~`OBDICONF_GO_PLUGIN_SOURCE`~~     | `/usr/share/obdi/static/plugins` TODO - don't use |
+
+For Worker file /etc/obdi-worker/obdi-worker.conf:
+
+| Environment Variable  | default |
+| ------------- | ------------- |
+| `OBDICONF_KEY`        | `lOcAlH0St` |
+| `OBDICONF_MAN_URLPREFIX` | `https://127.0.0.1` |
+| `OBDICONF_MAN_USER`        | `worker1` |
+| `OBDICONF_MAN_PASSWORD`        | `pAsSwOrD` |
+
 ## Build
 
 To build, recompiling obdi from github mclarkson/obdi and remaking
