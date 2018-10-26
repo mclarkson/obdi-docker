@@ -1,5 +1,20 @@
 #!/bin/bash
 
+[[ -n $OBDICONF_DATABASE_PATH ]] && \
+    mkdir -p $(dirname "$OBDICONF_DATABASE_PATH")
+
+[[ -n $OBDICONF_PLUGIN_DATABASE_PATH ]] && \
+    mkdir -p "$OBDICONF_PLUGIN_DATABASE_PATH"
+
+[[ -n $OBDICONF_GO_PLUGIN_DIR ]] && \
+    mkdir -p "$OBDICONF_GO_PLUGIN_DIR"
+
+[[ -n $OBDICONF_STATIC_CONTENT ]] && {  \
+    mkdir -p "$OBDICONF_STATIC_CONTENT"
+    OBDICONF_GO_PLUGIN_SOURCE="$OBDICONF_STATIC_CONTENT/plugins"
+    mkdir -p "$OBDICONF_GO_PLUGIN_SOURCE"
+}
+
 cat >/etc/obdi/obdi.conf <<EnD
 # ---------------------------------------------------------------------------
 # GENERAL OPTIONS
@@ -9,7 +24,7 @@ cat >/etc/obdi/obdi.conf <<EnD
 database_path = "${OBDICONF_DATABASE_PATH:-/var/lib/obdi/manager.db}"
 
 # Directory to serve static content from
-static_content = "/usr/share/obdi/static/"
+static_content = "${OBDICONF_STATIC_CONTENT:-/usr/share/obdi/static/}"
 
 # The address and port to listen on
 #
@@ -47,7 +62,7 @@ plugin_database_path = "${OBDICONF_PLUGIN_DATABASE_PATH:-/var/lib/obdi/plugins/}
 # Compiled plugin directory
 go_plugin_dir = "${OBDICONF_GO_PLUGIN_DIR:-/usr/lib/obdi/plugins}"
 
-# Go plugin source directory
+# Plugin source code repository directory
 go_plugin_source = "${OBDICONF_GO_PLUGIN_SOURCE:-/usr/share/obdi/static/plugins}"
 
 # Plugin port start number
@@ -84,18 +99,5 @@ ssl_key = "/etc/obdi/certs/key.pem"
 # No longer used
 #transport_timeout = 4
 EnD
-
-[[ -n $OBDICONF_DATABASE_PATH ]] && \
-    mkdir -p $(dirname "$OBDICONF_DATABASE_PATH")
-
-[[ -n $OBDICONF_PLUGIN_DATABASE_PATH ]] && \
-    mkdir -p "$OBDICONF_PLUGIN_DATABASE_PATH"
-
-[[ -n $OBDICONF_GO_PLUGIN_DIR ]] && \
-    mkdir -p "$OBDICONF_GO_PLUGIN_DIR"
-
-# DON'T SET THIS ONE - PLUGINS WON'T WORK
-#[[ -n $OBDICONF_GO_PLUGIN_SOURCE ]] && \
-#    mkdir -p "$OBDICONF_GO_PLUGIN_SOURCE"
 
 exec obdi
