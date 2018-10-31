@@ -15,6 +15,9 @@
     mkdir -p "$OBDICONF_GO_PLUGIN_SOURCE"
 }
 
+[[ -n $OBDICONF_SESSION_TIMEOUT ]] && \
+    mkdir -p "$OBDICONF_SESSION_TIMEOUT"
+
 cat >/etc/obdi/obdi.conf <<EnD
 # ---------------------------------------------------------------------------
 # GENERAL OPTIONS
@@ -50,7 +53,7 @@ syslog_enabled = false
 # ---------------------------------------------------------------------------
 
 # User's session inactivity timeout in minutes
-session_timeout = 10
+session_timeout = ${OBDICONF_SESSION_TIMEOUT:-10}
 
 # ---------------------------------------------------------------------------
 # PLUGIN OPTIONS
