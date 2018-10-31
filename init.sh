@@ -15,9 +15,6 @@
     mkdir -p "$OBDICONF_GO_PLUGIN_SOURCE"
 }
 
-[[ -n $OBDICONF_SESSION_TIMEOUT ]] && \
-    mkdir -p "$OBDICONF_SESSION_TIMEOUT"
-
 cat >/etc/obdi/obdi.conf <<EnD
 # ---------------------------------------------------------------------------
 # GENERAL OPTIONS
