@@ -81,6 +81,7 @@ For Master file /etc/obdi/obdi.conf:
 | `OBDICONF_PLUGIN_DATABASE_PATH` | `/var/lib/obdi/plugins/` |
 | `OBDICONF_GO_PLUGIN_DIR`        | `/usr/lib/obdi/plugins` |
 | `OBDICONF_STATIC_CONTENT`       | `/usr/share/obdi/static/` |
+| `OBDICONF_SESSION_TIMEOUT`      | 10 |
 
 For Worker file /etc/obdi-worker/obdi-worker.conf:
 
