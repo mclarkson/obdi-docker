@@ -75,12 +75,12 @@ The following environment variables are available:
 
 For Master file /etc/obdi/obdi.conf:
 
-| Environment Variable  | Default | Notes |
+| Environment Variable  | Default |
 | ------------- | ------------- |
-| `OBDICONF_DATABASE_PATH`        | `/var/lib/obdi/manager.db` | |
-| `OBDICONF_PLUGIN_DATABASE_PATH` | `/var/lib/obdi/plugins/` | |
-| `OBDICONF_GO_PLUGIN_DIR`        | `/usr/lib/obdi/plugins` | |
-| `OBDICONF_STATIC_CONTENT`       | `/usr/share/obdi/static/` | |
+| `OBDICONF_DATABASE_PATH`        | `/var/lib/obdi/manager.db` |
+| `OBDICONF_PLUGIN_DATABASE_PATH` | `/var/lib/obdi/plugins/` |
+| `OBDICONF_GO_PLUGIN_DIR`        | `/usr/lib/obdi/plugins` |
+| `OBDICONF_STATIC_CONTENT`       | `/usr/share/obdi/static/` |
 
 For Worker file /etc/obdi-worker/obdi-worker.conf:
 
